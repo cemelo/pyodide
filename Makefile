@@ -17,7 +17,7 @@ SHELL := /bin/bash
 CC=emcc
 CXX=em++
 OPTFLAGS=-O3
-CFLAGS=$(OPTFLAGS) -g -I$(PYTHONINCLUDE) -Wno-warn-absolute-paths
+CFLAGS=$(OPTFLAGS) -g -I$(PYTHONINCLUDE) -Wno-warn-absolute-paths -fPIC
 CXXFLAGS=$(CFLAGS) -std=c++14
 
 
@@ -26,8 +26,7 @@ LDFLAGS=\
 	-s MODULARIZE=1 \
 	$(CPYTHONROOT)/installs/python-$(PYVERSION)/lib/libpython$(PYMINOR).a \
 	$(LZ4LIB) \
-	-s "BINARYEN_METHOD='native-wasm'" \
-	-s TOTAL_MEMORY=5242880 \
+	-s TOTAL_MEMORY=1073741824 \
 	-s ALLOW_MEMORY_GROWTH=1 \
 	-s MAIN_MODULE=1 \
 	-s EMULATED_FUNCTION_POINTERS=1 \
@@ -44,7 +43,6 @@ LDFLAGS=\
 	$(wildcard $(CPYTHONROOT)/build/bzip2*/libbz2.a) \
 	-lstdc++ \
 	--memory-init-file 0 \
-	-s "BINARYEN_TRAP_MODE='clamp'" \
 	-s TEXTDECODER=0 \
 	-s LZ4=1
 

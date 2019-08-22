@@ -1,8 +1,6 @@
 ## Unreleased
 
-- The built-in `sqlite` and `bz2` modules of Python are now enabled.
-
-- New package: `nltk`
+- The included version of emscripten has been upgraded to 1.38.42
 
 ## Version 0.13.0
 

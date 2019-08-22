@@ -47,9 +47,9 @@ $(INSTALL)/lib/$(LIB): $(BUILD)/$(LIB)
 
 
 clean:
-	-rm -fr $(HOSTINSTALL)
-	-rm -fr $(BUILD)
-	-rm -fr $(INSTALL)
+	rm -rf downloads
+	rm -rf installs
+	rm -rf build
 
 
 $(TARBALL):
@@ -104,7 +104,7 @@ $(SQLITEBUILD)/libsqlite3.la: $(SQLITETARBALL)
 	tar -C $(ROOT)/build/ -xf $(SQLITETARBALL)
 	( \
 		cd $(SQLITEBUILD); \
-		emconfigure ./configure; \
+		CFLAGS=-fPIC emconfigure ./configure --with-pic --host=wasm32; \
 		emmake make; \
 	)
 
@@ -124,19 +124,20 @@ $(BUILD)/Makefile: $(BUILD)/.patched $(ZLIBBUILD)/.patched $(SQLITEBUILD)/libsql
 		cd $(BUILD); \
 		CONFIG_SITE=./config.site READELF=true LD_RUN_PATH="$(SQLITEBUILD):$(BZIP2BUILD)" emconfigure \
 		  ./configure \
-			  CPPFLAGS="-I$(SQLITEBUILD) -I$(BZIP2BUILD)" \
-			  LDFLAGS="-L$(SQLITEBUILD) -L$(BZIP2BUILD)" \
-			  --without-pymalloc \
-			  --disable-shared \
-			  --disable-ipv6 \
-			  --without-gcc \
-			  --host=asmjs-unknown-emscripten \
-			  --build=$(shell $(BUILD)/config.guess) \
-			  --prefix=$(INSTALL) ; \
+        CFLAGS="-fPIC" \
+			  CPPFLAGS="-I$(SQLITEBUILD)" \
+				LDFLAGS="-L$(SQLITEBUILD)" \
+				--without-pymalloc \
+				--disable-shared \
+				--disable-ipv6 \
+				--without-gcc \
+				--host=asmjs-unknown-emscripten \
+				--build=$(shell $(BUILD)/config.guess) \
+				--prefix=$(INSTALL) ; \
 	)
 
 
-$(BUILD)/$(LIB): $(BUILD)/Makefile $(HOSTPYTHON) $(HOSTPGEN) Setup.local
+$(BUILD)/$(LIB): $(BUILD)/Makefile $(HOSTPYTHON) $(HOSTPGEN) Setup.local pyconfig.undefs.h
 	cp Setup.local $(BUILD)/Modules/
 	cat pyconfig.undefs.h >> $(BUILD)/pyconfig.h
 	( \
