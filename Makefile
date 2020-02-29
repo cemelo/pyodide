@@ -25,7 +25,6 @@ LDFLAGS=\
 	-O3 \
 	-s MODULARIZE=1 \
 	$(CPYTHONROOT)/installs/python-$(PYVERSION)/lib/libpython$(PYMINOR).a \
-<<<<<<< HEAD
 	$(LZ4LIB) \
 	-s TOTAL_MEMORY=1073741824 \
 	-s ALLOW_MEMORY_GROWTH=1 \
@@ -34,35 +33,18 @@ LDFLAGS=\
 	-s EMULATE_FUNCTION_POINTER_CASTS=1 \
 	-s LINKABLE=1 \
 	-s EXPORT_ALL=1 \
-=======
-  $(LZ4LIB) \
-  -s TOTAL_MEMORY=1073741824 \
-  -s ALLOW_MEMORY_GROWTH=1 \
-	-s MAIN_MODULE=1 \
-  -s EMULATE_FUNCTION_POINTER_CASTS=1 \
-  -s LINKABLE=1 \
-  -s EXPORT_ALL=1 \
->>>>>>> 8cc78b09f83178818ab6cde9840df50668ab938b
 	-s EXPORTED_FUNCTIONS='["___cxa_guard_acquire", "__ZNSt3__28ios_base4initEPv"]' \
 	-s WASM=1 \
 	-s SWAPPABLE_ASM_MODULE=1 \
 	-s USE_FREETYPE=1 \
 	-s USE_LIBPNG=1 \
 	-std=c++14 \
-<<<<<<< HEAD
 	-L$(wildcard $(CPYTHONROOT)/build/sqlite*/.libs) -lsqlite3 \
 	$(wildcard $(CPYTHONROOT)/build/bzip2*/libbz2.a) \
 	-lstdc++ \
 	--memory-init-file 0 \
 	-s TEXTDECODER=0 \
 	-s LZ4=1
-=======
-  -L$(wildcard $(CPYTHONROOT)/build/sqlite*/.libs) -lsqlite3 \
-  -lstdc++ \
-  --memory-init-file 0 \
-  -s TEXTDECODER=0 \
-  -s LZ4=1
->>>>>>> 8cc78b09f83178818ab6cde9840df50668ab938b
 
 SIX_ROOT=six/six-1.11.0/build/lib
 SIX_LIBS=$(SIX_ROOT)/six.py
@@ -232,11 +214,7 @@ $(PYODIDE_CXX):
 		if hash ccache &>/dev/null; then \
 			ln -s `which ccache` $@ ; \
 		else \
-<<<<<<< HEAD
 			ln -s emsdk/emsdk/emscripten/tag-$(EMSCRIPTEN_VERSION)/em++ $@; \
-=======
-				ln -s emsdk/emsdk/emscripten/tag-$(EMSCRIPTEN_VERSION)/em++ $@; \
->>>>>>> 8cc78b09f83178818ab6cde9840df50668ab938b
 		fi; \
 	fi
 
